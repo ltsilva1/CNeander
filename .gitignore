@@ -1,0 +1,15 @@
+# Pasta de build do CLion
+/cmake-build-*/
+
+# Arquivos de projeto do CLion
+.idea/
+
+# Arquivos gerados pelo compilador
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+# Outros
+*.DS_Store
