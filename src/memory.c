@@ -1,9 +1,12 @@
 #include "../include/memory.h"
+#include "../include/memory.h"
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "print_functions.h"
 
 void clearMemory(Neander* cpu) {
     memset(cpu->memoria, 0, sizeof(cpu->memoria));
@@ -26,6 +29,8 @@ void exportMemory(Neander* cpu, const char nomeArquivo[]) {
     fwrite(cpu->memoria, sizeof(uint8_t), 512, arquivo);
 
     printf("Memoria exportada!\n");
+
+    printToTxt(*cpu, nomeArquivo);
 
     fclose(arquivo);
 }

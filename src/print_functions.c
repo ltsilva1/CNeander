@@ -68,3 +68,59 @@ void printStates(Neander cpu) {
     printf("AC: %03d PC: %03d\n", cpu.acumulador, cpu.pc/2);
     printf("N:  %03d Z:  %03d\n", cpu.negativo, cpu.zero);
 }
+
+void printToTxt(Neander cpu, const char nomeArquivo[]) {
+    char nomeArquivoTXT[100];
+    sprintf(nomeArquivoTXT, "%s.txt", nomeArquivo);
+
+    FILE* arquivoTXT = fopen(nomeArquivoTXT, "w");
+    for (int i = 0; i < 512; i++) {
+        if (i + 2 < 512) { // Guarda de acesso
+            switch (cpu.memoria[i]) {
+                case  16:
+                    fprintf(arquivoTXT, "STA %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  32:
+                    fprintf(arquivoTXT,"LDA %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  48:
+                    fprintf(arquivoTXT,"ADD %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  64:
+                    fprintf(arquivoTXT,"OR %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  80:
+                    fprintf(arquivoTXT,"AND %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  96:
+                    fprintf(arquivoTXT,"NOT\n");
+                    break;
+                case  128:
+                    fprintf(arquivoTXT,"JMP %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  144:
+                    fprintf(arquivoTXT,"JN  %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  160:
+                    fprintf(arquivoTXT,"JZ  %03d\n", cpu.memoria[i+2]);
+                    i += 2;
+                    break;
+                case  240:
+                    fprintf(arquivoTXT,"HLT\n(Fim das instrucoes)\n");
+                    break;
+                case 000:
+                    break;
+                default:
+                    fprintf(arquivoTXT,"%03d\n", cpu.memoria[i]);
+            }
+        }
+    }
+    printf("Arquivo de texto exportado!");
+}
