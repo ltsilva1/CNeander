@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     clearMemory(&cpu);
 
     loadMemory(&cpu, argv[1]);
+    printMemoryASIS(cpu);
     printMemory(cpu);
 
     executeMemory(&cpu);
